@@ -1,10 +1,28 @@
 import { serve } from "https://deno.land/std@0.167.0/http/server.ts";
 
-const UNTIL_PAGE = "1/61";
+const DATA_URL = "https://api.github.com/repos/vwkd/kita-dict-data/contents/src/dict.txt";
+const UNTIL_PAGE = Deno.env.get("UNTIL_PAGE") || "1/38";
+const GITHUB_TOKEN = Deno.env.get("GITHUB_TOKEN");
 
 console.debug(`Loading dict until page ${UNTIL_PAGE}...`);
 
-const data = await Deno.readTextFile("dict.md");
+if (!UNTIL_PAGE.match(/^[123]\/[123456789]\d{0,2}$/)) {
+  throw new Error(`Bad UNTIL_PAGE '${UNTIL_PAGE}'`);
+}
+
+const res = await fetch(DATA_URL, {
+  headers: {
+    Accept: "application/vnd.github.raw",
+    Authorization: `Bearer ${GITHUB_TOKEN}`,
+  }
+})
+
+const data = await res.text();
+
+if (data.startsWith("{")) {
+  const error = JSON.parse(data);
+  throw new Error(error.message);
+}
 
 // beware: trailing hyphen (if any) of last line not deleted
 // when concatenated with continued first line on next page
