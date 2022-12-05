@@ -1,19 +1,18 @@
 import { serve } from "https://deno.land/std@0.167.0/http/server.ts";
 
-// beware: uses whole page if not provided or in wrong format!
-const until_page = Deno.env.get("UNTIL_PAGE");
+const UNTIL_PAGE = "1/61";
 
-console.debug(`Loading dict until page ${until_page}...`);
+console.debug(`Loading dict until page ${UNTIL_PAGE}...`);
 
 const data = await Deno.readTextFile("dict.md");
 
 // beware: trailing hyphen (if any) of last line not deleted
 // when concatenated with continued first line on next page
 const input = data
-  .slice(0, data.indexOf(`## ${until_page}`))
+  .slice(0, data.indexOf(`## ${UNTIL_PAGE}`))
   .replace(/^##.*/gm, "")
   .replace(/^\n/gm, "")
-  .replace(/\n♦︎/g, "");
+  .replace(/\n♦︎ /g, "");
 
 const entries = input.split(/\n(?!  )/);
 
@@ -24,10 +23,10 @@ function handleRequest(req) {
   console.debug(`Handling request for query '${q}'`);
 
   // note: use case insensitive match
-  const r1 = new RegExp(`.*${q}.*`, "i");
+  const r1 = new RegExp(q, "i");
 
-  // filter any symbols inside words for search to work at least somewhat okay
-  const r2 = /[\-\|\*\(\)]/g;
+  // filter inhibiting symbols inside line
+  const r2 = /[\|\*\(\)]|(\n  )/g;
 
   const indices = entries.map((str, i) => {
     const line = str.replace(r2, "");
