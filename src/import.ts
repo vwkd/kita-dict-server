@@ -1,14 +1,16 @@
 const DATA_URL = "https://api.github.com/repos/vwkd/kita-dict-data/contents/src/dict.txt";
-const UNTIL_PAGE = Deno.env.get("UNTIL_PAGE") || "1/71";
+const LAST_PAGE = Deno.env.get("LAST_PAGE");
 const GITHUB_TOKEN = Deno.env.get("GITHUB_TOKEN");
 
-console.debug(`Loading dict until page ${UNTIL_PAGE}...`);
+console.debug(`Loading dict until last page ${LAST_PAGE}...`);
 
-if (!UNTIL_PAGE.match(/^[123]\/[123456789]\d{0,2}$/)) {
-  throw new Error(`Bad UNTIL_PAGE '${UNTIL_PAGE}'`);
+const matches = LAST_PAGE.match(/^([123])\/([123456789]\d{0,2})$/);
+
+if (!matches) {
+  throw new Error(`Bad LAST_PAGE '${LAST_PAGE}'`);
 }
 
-export const [_, book, page] = UNTIL_PAGE.match(/^([123])\/([123456789]\d{0,2})$/);
+export const [_, book, last_page] = matches;
 
 const res = await fetch(DATA_URL, {
   headers: {
@@ -27,7 +29,7 @@ if (data.startsWith("{")) {
 // beware: trailing hyphen (if any) of last line not deleted
 // when concatenated with continued first line on next page
 const input = data
-  .slice(0, data.indexOf(`## ${UNTIL_PAGE}`))
+  .slice(0, data.indexOf(`## ${book}/${parseInt(last_page) + 1}`))
   .replace(/^##.*/gm, "")
   .replace(/^\n/gm, "")
   .replace(/\n♦︎ /g, "")
