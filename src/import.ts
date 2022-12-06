@@ -1,18 +1,18 @@
 import { PAGES } from "./constants.ts";
 
 const DATA_URL = "https://api.github.com/repos/vwkd/kita-dict-data/contents/src/dict.txt";
-const LAST_PAGE = Deno.env.get("LAST_PAGE");
+const UNTIL_PAGE = Deno.env.get("UNTIL_PAGE");
 const GITHUB_TOKEN = Deno.env.get("GITHUB_TOKEN");
 
-console.debug(`Loading dict until last page ${LAST_PAGE}...`);
+console.debug(`Loading dict until page ${UNTIL_PAGE}...`);
 
-const matches = UNTIL_PAGE && LAST_PAGE.match(/^([123])\/([123456789]\d{0,2})$/);
+const matches = UNTIL_PAGE && UNTIL_PAGE.match(/^([123])\/([123456789]\d{0,2})$/);
 
 if (!matches) {
-  throw new Error(`Bad LAST_PAGE '${LAST_PAGE}'`);
+  throw new Error(`Bad UNTIL_PAGE '${UNTIL_PAGE}'`);
 }
 
-export const pages = PAGES.indexOf(LAST_PAGE);
+export const pages = PAGES.indexOf(UNTIL_PAGE) - 1;
 export const pagesTotal = PAGES.length;
 export const progress = (pages / pagesTotal * 100).toFixed(2);
 
@@ -31,7 +31,7 @@ if (data.startsWith("{")) {
 }
 
 const input = data
-  .slice(0, data.indexOf(PAGES[PAGES.indexOf(LAST_PAGE) + 1]))
+  .slice(0, data.indexOf(UNTIL_PAGE))
   .replace(/^##.*/gm, "")
   .replace(/^\n/gm, "")
   .replace(/\n♦︎/g, "")
