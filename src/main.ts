@@ -1,5 +1,5 @@
 import { serve } from "std/http/server.ts";
-import { entries, book, last_page } from "./import.ts";
+import { entries, progress, pages, pagesTotal } from "./import.ts";
 
 function handleRequest(req) {
   console.debug("Handling request");
@@ -9,7 +9,8 @@ function handleRequest(req) {
 
   if (path == "/status") {
     console.debug("Status");
-    return Response.json({ book, last_page });
+
+    return Response.json({ progress, pages, pagesTotal });
   } else if (path == "/results") {
     const q = url.searchParams.get("q");
     console.debug(`Query '${q}'`);

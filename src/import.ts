@@ -1,16 +1,20 @@
+import { PAGES } from "./constants.ts";
+
 const DATA_URL = "https://api.github.com/repos/vwkd/kita-dict-data/contents/src/dict.txt";
 const LAST_PAGE = Deno.env.get("LAST_PAGE");
 const GITHUB_TOKEN = Deno.env.get("GITHUB_TOKEN");
 
 console.debug(`Loading dict until last page ${LAST_PAGE}...`);
 
-const matches = LAST_PAGE.match(/^([123])\/([123456789]\d{0,2})$/);
+const matches = UNTIL_PAGE && LAST_PAGE.match(/^([123])\/([123456789]\d{0,2})$/);
 
 if (!matches) {
   throw new Error(`Bad LAST_PAGE '${LAST_PAGE}'`);
 }
 
-export const [_, book, last_page] = matches;
+export const pages = PAGES.indexOf(LAST_PAGE);
+export const pagesTotal = PAGES.length;
+export const progress = (pages / pagesTotal * 100).toFixed(2);
 
 const res = await fetch(DATA_URL, {
   headers: {
@@ -26,13 +30,11 @@ if (data.startsWith("{")) {
   throw new Error(error.message);
 }
 
-// beware: trailing hyphen (if any) of last line not deleted
-// when concatenated with continued first line on next page
 const input = data
-  .slice(0, data.indexOf(`## ${book}/${parseInt(last_page) + 1}`))
+  .slice(0, data.indexOf(PAGES[PAGES.indexOf(LAST_PAGE) + 1]))
   .replace(/^##.*/gm, "")
   .replace(/^\n/gm, "")
-  .replace(/\n♦︎ /g, "")
+  .replace(/\n♦︎/g, "")
   .replace(/(?<=^|[\( ])(([123]\.sg)|([123]\.pl)|(a)|(A)|(ad\.dem\.)|(ad\.int\.)|(ad\.rel\.)|(ad)|(aor)|(attr)|(cd)|(cj\.pr\.)|(cj\.f\.)|(cj\.pt\.)|(cj)|(comp)|(D\/A)|(dekl)|(dim)|(E)|(enkl)|(fig)|(fut)|(f\/sg)|(f\/pl)|(f)|(G)|(3\.Gr\.)|(HV)|(I)|(imp)|(impf)|(inf)|(int)|(interrog\. Possessivpron\.)|(Indefinitpron\.)|(indefinites Possessivpron\.)|(m\/sg)|(m\/pl)|(m)|(N)|(n\/sg)|(n\/pl)|(n)|(opt\.pr)|(opt\.fut)|(opt)|(p\.a\.)|((perf\.))|(p\.f\.)|(p\.n\.)|(p\.p\.)|(pf)|(pl-pf)|(pl)|(pp)|(pp mit G)|(pr\.dem\.)|(pr\.int\.)|(pr\.pers\.)|(pr\.poss\.)|(pr\.rel)|(pr)|(prv)|(rel\. Possessivpron\.)|(S)|(sg)|(spn)|(sub)|(sup)|(V))(?=[ \),;]|$)/gm, "*$1*");
 
 export const entries = input.split(/\n(?!  )/);
