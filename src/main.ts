@@ -1,5 +1,5 @@
 import { serve } from "std/http/server.ts";
-import { entries, progress, pages, pagesTotal } from "./import.ts";
+import { dict, abbreviations, symbols, progress, pages, pagesTotal } from "./import.ts";
 
 function handleRequest(req) {
   console.debug("Handling request");
@@ -11,6 +11,10 @@ function handleRequest(req) {
     console.debug("Status");
 
     return Response.json({ progress, pages, pagesTotal });
+  } else if (path == "/reference") {
+    console.debug("Reference");
+
+    return Response.json({ abbreviations, symbols });
   } else if (path == "/results") {
     const q = url.searchParams.get("q");
     console.debug(`Query '${q}'`);
@@ -25,7 +29,7 @@ function handleRequest(req) {
     // filter inhibiting symbols inside line
     const r2 = /[\|\*\(\)]|(\n  )/g;
   
-    const indices = entries.map((str, i) => {
+    const indices = dict.map((str, i) => {
       const line = str.replace(r2, "");
   
       if (line.match(r1)) {
@@ -33,7 +37,7 @@ function handleRequest(req) {
       }
     });
   
-    const matches = entries
+    const matches = dict
       .filter((_, i) => indices.includes(i));
   
     console.debug(`Found ${matches.length} matches`);
