@@ -32,11 +32,11 @@ const SSV_REGEX = /(^.+)(?<!\s)\s{2,}(.+$)/;
 
 export const abbreviations = abbreviationsRaw
   .split("\n")
-  .map(l => l.match(SSV_REGEX).slice(1));
+  .map(l => l.match(SSV_REGEX)!.slice(1));
 
 export const symbols = symbolsRaw
   .split("\n")
-  .map(l => l.match(SSV_REGEX).slice(1));
+  .map(l => l.match(SSV_REGEX)!.slice(1));
 
 const HEADER_LINES = /^##.*/gm;
 const EMPTY_LINES = /(^\n)/gm;
@@ -46,8 +46,8 @@ const ENTRY_SEPARATOR = /\n(?!  )/;
 const CURSIVE = /(?<=^\*).+(?=\*$)/;
 // note: reverse such that longer are first, e.g. `prv` before `pr`
 const cursive_abbreviations = abbreviations
-  .map(([key, _]) => key.match(CURSIVE)?.[0])
-  .filter(k => k)
+  .filter(([key, _]) => key.match(CURSIVE))
+  .map(([key, _]) => key.match(CURSIVE)![0])
   .toReversed();
 
 // make cursive if surrounded by space, parentheses, or followed by semicolon, comma
@@ -81,11 +81,11 @@ export const dict = dictRaw
   .replace(PATCH2, "*$1$2")
   .split(ENTRY_SEPARATOR);
 
-function escapeRegex(str) {
+function escapeRegex(str: string) {
   return str.replace(/[\/.()]/g, '\\$&');
 }
 
-async function fetchData(url) {
+async function fetchData(url: string) {
   const res = await fetch(url, {
     headers: {
       Accept: "application/vnd.github.raw",

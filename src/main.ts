@@ -1,7 +1,7 @@
 import { serve } from "std/http/server.ts";
 import { dict, abbreviations, symbols, progress, pages, pagesTotal } from "./import.ts";
 
-function handleRequest(req) {
+function handleRequest(req: Request) {
   console.debug("Handling request");
 
   const url = new URL(req.url);
