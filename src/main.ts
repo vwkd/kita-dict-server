@@ -29,10 +29,11 @@ function handleRequest(req: Request) {
     // filter inhibiting symbols inside line
     const r2 = /[\|\*\(\)]|(\n  )/g;
   
-    const indices = dict.map((str, i) => {
-      const line = str.replace(r2, "");
+    const indices = dict.map((sublines, i) => {
+
+      const lines = sublines.map(str => str.replace(r2, ""));
   
-      if (line.match(r1)) {
+      if (lines.some(line => line.match(r1))) {
         return i;
       }
     });

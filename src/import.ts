@@ -79,7 +79,8 @@ export const dict = dictRaw
   .replace(CURSIVE_ABBREVIATIONS, "*$1*")
   .replace(PATCH1, " $1 ")
   .replace(PATCH2, "*$1$2")
-  .split(ENTRY_SEPARATOR);
+  .split(ENTRY_SEPARATOR)
+  .map(entry => entry.split("\n  "));
 
 function escapeRegex(str: string) {
   return str.replace(/[\/.()]/g, '\\$&');
