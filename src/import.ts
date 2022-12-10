@@ -1,6 +1,6 @@
 import { PAGES } from "./constants.ts";
 
-const UNTIL_PAGE = Deno.env.get("UNTIL_PAGE");
+const LAST_PAGE = Deno.env.get("LAST_PAGE");
 const GITHUB_TOKEN = Deno.env.get("GITHUB_TOKEN");
 
 const CONTENTS_URL = "https://api.github.com/repos/vwkd/kita-dict-data/contents/";
@@ -8,16 +8,16 @@ const DICT_URL = "src/dict.txt";
 const ABBREVIATIONS_URL = "src/abbreviations.txt";
 const SYMBOLS_URL = "src/symbols.txt";
 
-console.debug(`Loading dict until page ${UNTIL_PAGE}...`);
+console.debug(`Loading dict until last page ${LAST_PAGE}...`);
 
 // page number in header e.g. `1/71`
 const PAGE_NUMBER = /^([123])\/([123456789]\d{0,2})$/;
 
-if (!UNTIL_PAGE || !UNTIL_PAGE.match(PAGE_NUMBER)) {
-  throw new Error(`Bad UNTIL_PAGE '${UNTIL_PAGE}'`);
+if (!LAST_PAGE || !LAST_PAGE.match(PAGE_NUMBER)) {
+  throw new Error(`Bad LAST_PAGE '${LAST_PAGE}'`);
 }
 
-export const pages = PAGES.indexOf(UNTIL_PAGE) - 1;
+export const pages = PAGES.indexOf(LAST_PAGE);
 export const pagesTotal = PAGES.length;
 export const progress = (pages / pagesTotal * 100).toFixed(2);
 
@@ -63,7 +63,7 @@ const PATCH2 = /([123]\.)\*(sg|pl)/g;
 // todo: make missing cursive, e.g. `Indefinitpron.`, etc.
 
 /*
-- cut off after header on UNTIL_PAGE
+- cut off at header of next page after LAST_PAGE
 - remove header lines
 - remove empty lines
 - join continued lines
@@ -72,7 +72,7 @@ const PATCH2 = /([123]\.)\*(sg|pl)/g;
 - split entries (but not verbs)
 */
 export const dict = dictRaw
-  .slice(0, dictRaw.indexOf(UNTIL_PAGE))
+  .slice(0, dictRaw.indexOf(PAGES[PAGES.indexOf(LAST_PAGE) + 1]))
   .replace(HEADER_LINES, "")
   .replace(EMPTY_LINES, "")
   .replace(CONTINUED_LINES, "")
