@@ -10,7 +10,9 @@ function handleRequest(req: Request) {
   if (path == "/status") {
     console.debug("Status");
 
-    return Response.json({ progress, pages, pagesTotal });
+    const entries = dict.length;
+
+    return Response.json({ entries, progress, pages, pagesTotal });
   } else if (path == "/reference") {
     console.debug("Reference");
 
