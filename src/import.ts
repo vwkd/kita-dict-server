@@ -70,6 +70,7 @@ const PATCH2 = /([123]\.)\*(sg|pl)/g;
 - tag cursive abbreviations
 - tag cursive abbreviations left over
 - split entries (but not verbs)
+- filter trailing new line (if any)
 */
 export const dict = dictRaw
   .slice(0, dictRaw.indexOf(PAGES[PAGES.indexOf(LAST_PAGE) + 1]))
@@ -80,7 +81,8 @@ export const dict = dictRaw
   .replace(PATCH1, " $1 ")
   .replace(PATCH2, "*$1$2")
   .split(ENTRY_SEPARATOR)
-  .map(entry => entry.split("\n  "));
+  .map(entry => entry.split("\n  "))
+  .filter(e => e[0] !== "");
 
 function escapeRegex(str: string) {
   return str.replace(/[\/.()]/g, '\\$&');
