@@ -60,13 +60,26 @@ const PATCH1 = /\* ((mit)|(od\.)) \*/g;
 // make `sg` and `pl` numbers also cursive, e.g. `1.pl`
 const PATCH2 = /([123]\.)\*(sg|pl)/g;
 
-// todo: make missing cursive, e.g. `Indefinitpron.`, etc.
+// todo: make missing cursive
+const cursive_other = [
+  "merke:",
+  "Merke:",
+  "Indefinitpron.",
+  "indefinites Possessivpron.",
+  "interrog. Possessivpron.",
+  "rel. Possessivpron.",
+  "Reflexivpron.",
+  "Identitätspron.",
+];
+
+const CURSIVE_OTHER = new RegExp(`((${cursive_other.map(c => escapeRegex(c)).join(")|(")}))`, "gm");
 
 /*
 - cut off at header of next page after LAST_PAGE
 - remove header lines
 - remove empty lines
 - join continued lines
+- tag cursive abbreviations other
 - tag cursive abbreviations
 - tag cursive abbreviations left over
 - split entries (but not verbs)
@@ -77,6 +90,7 @@ export const dict = dictRaw
   .replace(HEADER_LINES, "")
   .replace(EMPTY_LINES, "")
   .replace(CONTINUED_LINES, "")
+  .replace(CURSIVE_OTHER, "*$1*")
   .replace(CURSIVE_ABBREVIATIONS, "*$1*")
   .replace(PATCH1, " $1 ")
   .replace(PATCH2, "*$1$2")
