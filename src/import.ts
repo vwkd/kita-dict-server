@@ -76,8 +76,10 @@ const cursive_other = [
   "indefinites Possessivpron.",
   "interrog. Possessivpron.",
   "rel. Possessivpron.",
+  "unbestimmtes Pron.",
   "Reflexivpron.",
   "Identitätspron.",
+  "Zahlwort",
 ];
 
 const CURSIVE_OTHER = new RegExp(
