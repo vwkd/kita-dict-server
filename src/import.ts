@@ -80,6 +80,8 @@ const cursive_other = [
   "Reflexivpron.",
   "Identitätspron.",
   "Zahlwort",
+  "Subjekt im Singular",
+  "Subjekt im Plural",
 ];
 
 const CURSIVE_OTHER = new RegExp(
