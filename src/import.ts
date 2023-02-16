@@ -62,7 +62,7 @@ const CURSIVE_ABBREVIATIONS = new RegExp(
   "gm",
 );
 
-// make connection words `mit`, `od.` also cursive, e.g. `pp mit G`
+// make connection words `mit`, `od.` also cursive, e.g. `pp mit G`, `Präposition mit G`
 const PATCH1 = /\* ((mit)|(od\.)) \*/g;
 
 // make `sg` and `pl` numbers also cursive, e.g. `1.pl`
@@ -82,6 +82,7 @@ const cursive_other = [
   "Zahlwort",
   "Subjekt im Singular",
   "Subjekt im Plural",
+  "Präposition mit",
 ];
 
 const CURSIVE_OTHER = new RegExp(
