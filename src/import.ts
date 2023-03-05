@@ -83,6 +83,8 @@ const cursive_other = [
   "Subjekt im Singular",
   "Subjekt im Plural",
   "Präposition mit",
+  "mit S",
+  "ohne S",
 ];
 
 const CURSIVE_OTHER = new RegExp(
