@@ -53,10 +53,17 @@ const cursive_abbreviations = abbreviations
   .map(([key, _]) => key.match(CURSIVE)![0])
   .toReversed();
 
+// prevent false positives
+const cursive_excludes = [
+  "a)",
+];
+
 // make cursive if surrounded by space, parentheses, or followed by semicolon, comma
 // todo: needs `^`? is ever at beginning of line?
 const CURSIVE_ABBREVIATIONS = new RegExp(
-  `(?<=^|[\( ])((${
+  `(?<=^|[\( ])(?!${
+    cursive_excludes.map((p) => escapeRegex(p)).join(")|(")
+  })((${
     cursive_abbreviations.map((c) => escapeRegex(c)).join(")|(")
   }))(?=[ \),;]|$)`,
   "gm",
