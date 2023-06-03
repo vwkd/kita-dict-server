@@ -69,8 +69,8 @@ const CURSIVE_ABBREVIATIONS = new RegExp(
   "gm",
 );
 
-// make connection words `mit`, `od.` also cursive, e.g. `pp mit G`, `Präposition mit G`
-const PATCH1 = /\* ((mit)|(od\.)) \*/g;
+// beware: some connection words like `mit` and `od.` are also cursive, e.g. `pp mit G`, `Präposition mit G`, `pp mit D/A od. G`, etc.
+// but can't simply patch all cursive because false positives, e.g. `m od. f`, etc.
 
 // make `sg` and `pl` numbers also cursive, e.g. `1.pl`
 const PATCH2 = /([123]\.)\*(sg|pl)/g;
@@ -116,7 +116,6 @@ export const dictText = dictRaw
   .replace(CONTINUED_LINES, "")
   .replace(CURSIVE_OTHER, "*$1*")
   .replace(CURSIVE_ABBREVIATIONS, "*$1*")
-  .replace(PATCH1, " $1 ")
   .replace(PATCH2, "*$1$2");
 
 /*
