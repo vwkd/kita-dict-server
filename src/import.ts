@@ -69,8 +69,8 @@ const CURSIVE_ABBREVIATIONS = new RegExp(
   "gm",
 );
 
-// beware: some connection words like `mit` and `od.` are also cursive, e.g. `pp mit G`, `Präposition mit G`, `pp mit D/A od. G`, etc.
-// but can't simply patch all cursive because false positives, e.g. `m od. f`, etc.
+// beware: some connection words like `mit` and `od.` are also cursive, e.g. `pp mit G`, `Präposition mit G`, `pp mit D/A od. G`, `mit S` etc.
+// but can't simply patch all cursive because false positives, e.g. `m od. f`, `mit S...` etc.
 
 // make `sg` and `pl` numbers also cursive, e.g. `1.pl`
 const PATCH2 = /([123]\.)\*(sg|pl)/g;
@@ -90,8 +90,6 @@ const cursive_other = [
   "Subjekt im Singular",
   "Subjekt im Plural",
   "Präposition mit",
-  "mit S",
-  "ohne S",
   "Objekt im Singular",
 ];
 
