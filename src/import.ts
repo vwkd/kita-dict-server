@@ -1,4 +1,3 @@
-import "std/dotenv/load.ts";
 import { PAGES } from "$utils/dict.ts";
 import { fetchGithub } from "$utils/fetch.ts";
 

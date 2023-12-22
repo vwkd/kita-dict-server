@@ -1,5 +1,5 @@
 {
-  "version": "2",
+  "version": "3",
   "remote": {
     "https://deno.land/std@0.167.0/async/abortable.ts": "80b2ac399f142cc528f95a037a7d0e653296352d95c681e284533765961de409",
     "https://deno.land/std@0.167.0/async/deadline.ts": "2c2deb53c7c28ca1dda7a3ad81e70508b1ebc25db52559de6b8636c9278fd41f",
@@ -11,11 +11,7 @@
     "https://deno.land/std@0.167.0/async/pool.ts": "6854d8cd675a74c73391c82005cbbe4cc58183bddcd1fbbd7c2bcda42b61cf69",
     "https://deno.land/std@0.167.0/async/retry.ts": "e8e5173623915bbc0ddc537698fa418cf875456c347eda1ed453528645b42e67",
     "https://deno.land/std@0.167.0/async/tee.ts": "3a47cc4e9a940904fd4341f0224907e199121c80b831faa5ec2b054c6d2eff5e",
-    "https://deno.land/std@0.167.0/dotenv/load.ts": "9adeb1fb395f991f958a06c8b3adafdcbac0056e7a6a35bf9d33eab6347ef63c",
-    "https://deno.land/std@0.167.0/dotenv/mod.ts": "9846f28b263c0c793345d74939f69bf34b46446aa2450e070c10a2140064165a",
-    "https://deno.land/std@0.167.0/dotenv/util.ts": "6cc392f087577a26a27f0463f77cc0c31a390aa055917099935b36eb2454592d",
     "https://deno.land/std@0.167.0/http/server.ts": "e99c1bee8a3f6571ee4cdeb2966efad465b8f6fe62bec1bdb59c1f007cc4d155",
-    "https://raw.githubusercontent.com/vwkd/kita-utils/8476bfa8c91908893dbf505f3bcceb73c1505d95/src/fetch.ts": "9120669f124be0e7ee260db020deb8bdc4751f88b7f620216547e064de712c7a",
     "https://raw.githubusercontent.com/vwkd/kita-utils/862f2eeaca43a458a83a7a562725f2f080ee2f12/src/dict.ts": "9b5abfd74007af45c671d0b124ee4d01b99d18b2bc7657fb8c5a99e1ebc3f45c",
     "https://raw.githubusercontent.com/vwkd/kita-utils/862f2eeaca43a458a83a7a562725f2f080ee2f12/src/fetch.ts": "9120669f124be0e7ee260db020deb8bdc4751f88b7f620216547e064de712c7a"
   }

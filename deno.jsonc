@@ -1,6 +1,6 @@
 {
   "importMap": "./import_map.json",
   "tasks": {
-    "dev": "deno run --allow-read --allow-net --allow-env --watch src/main.ts"
+    "dev": "op run --env-file='./.env' -- deno run --allow-read --allow-net --allow-env --watch src/main.ts"
   }
 }
