@@ -1,6 +1,0 @@
-{
-  "imports": {
-    "std/": "https://deno.land/std@0.167.0/",
-    "$utils/": "https://raw.githubusercontent.com/vwkd/kita-utils/862f2eeaca43a458a83a7a562725f2f080ee2f12/src/"
-  }
-}
