@@ -90,6 +90,7 @@ const cursive_other = [
   "Subjekt im Plural",
   "Präposition mit",
   "Objekt im Singular",
+  "cj mit Opt.",
 ];
 
 const CURSIVE_OTHER = new RegExp(
