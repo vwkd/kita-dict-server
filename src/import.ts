@@ -107,7 +107,7 @@ const CURSIVE_OTHER = new RegExp(
 - tag cursive abbreviations
 - tag cursive abbreviations left over
 */
-export const dictText = dictRaw
+const dictText = dictRaw
   .slice(0, dictRaw.indexOf(PAGES[PAGES.indexOf(LAST_PAGE) + 1]))
   .replace(HEADER_LINES, "")
   .replace(EMPTY_LINES, "")
