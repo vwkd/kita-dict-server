@@ -1,5 +1,12 @@
 import { serve } from "std/http/server.ts";
-import { dict, abbreviations, symbols, progress, pages, pagesTotal } from "./import.ts";
+import {
+  abbreviations,
+  dict,
+  pages,
+  pagesTotal,
+  progress,
+  symbols,
+} from "./import.ts";
 
 function handleRequest(req: Request) {
   console.debug("Handling request");
@@ -27,24 +34,23 @@ function handleRequest(req: Request) {
 
     // note: use case insensitive match
     const r1 = new RegExp(q, "i");
-  
+
     // filter inhibiting symbols inside line
     const r2 = /[\|\*\(\)]|(\n  )/g;
-  
-    const indices = dict.map((sublines, i) => {
 
-      const lines = sublines.map(str => str.replace(r2, ""));
-  
-      if (lines.some(line => line.match(r1))) {
+    const indices = dict.map((sublines, i) => {
+      const lines = sublines.map((str) => str.replace(r2, ""));
+
+      if (lines.some((line) => line.match(r1))) {
         return i;
       }
     });
-  
+
     const matches = dict
       .filter((_, i) => indices.includes(i));
-  
+
     console.debug(`Found ${matches.length} matches`);
-  
+
     return Response.json(matches);
   } else {
     console.debug(`Invalid path '${path}'`);
