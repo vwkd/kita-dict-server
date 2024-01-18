@@ -42,6 +42,7 @@ export const symbols = symbolsRaw
 
 const HEADER_LINES = /^##.*/gm;
 const EMPTY_LINES = /(^\n)/gm;
+const CONTINUED_HYPHEN = /-♠︎$/gm;
 const CONTINUED_LINES = /\n♦︎/g;
 const ENTRY_SEPARATOR = /\n(?!  )/;
 
@@ -111,6 +112,7 @@ const dictText = dictRaw
   .slice(0, dictRaw.indexOf(PAGES[PAGES.indexOf(LAST_PAGE) + 1]))
   .replace(HEADER_LINES, "")
   .replace(EMPTY_LINES, "")
+  .replace(CONTINUED_HYPHEN, "")
   .replace(CONTINUED_LINES, "")
   .replace(CURSIVE_OTHER, "*$1*")
   .replace(CURSIVE_ABBREVIATIONS, "*$1*")
