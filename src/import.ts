@@ -91,6 +91,7 @@ const cursive_other = [
   "Subjekt im Plural",
   "Präposition mit",
   "Objekt im Singular",
+  "Objekt im Plural",
   "cj mit Opt.",
 ];
 
